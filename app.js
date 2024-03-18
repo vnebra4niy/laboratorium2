@@ -1,24 +1,20 @@
 const http = require('http')
 const fs = require('fs')
+const url = require('url')
+const { handleHome, handleStudent } = require('./routes/index')
 
 const PORT = 3000
 
-const homePage = require('./views/home')
-const studentPage = require('./views/student')
-
-const routes = {
-  '/': homePage.renderPage,
-  '/student': studentPage.renderPage
-}
-
 const server = http.createServer((req, res) => {
-  const routeHandler = routes[req.url]
-  
-  if (routeHandler) {
-    res.writeHead(200, {'Content-Type': 'text/html'})
-    res.end(routeHandler())
+  const parsedUrl = url.parse(req.url, true)
+  const pathname = parsedUrl.pathname
+
+  if (pathname === '/' || pathname === '/home') {
+    handleHome(req, res)
+  } else if (pathname === '/student') {
+    handleStudent(req, res)
   } else {
-    res.writeHead(404, {'Content-Type': 'text/plain'})
+    res.writeHead(404, {'Content-Type': 'text/html'})
     res.end('404 Not Found')
   }
 })
