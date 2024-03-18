@@ -8,7 +8,7 @@ function renderPage() {
         </head>
         <body>
           <h2>Prosty formularz</h2>
-          <form action="/submit" method="POST">
+          <form action="/student" method="POST">
             <label for="name">Imię:</label>
             <input type="text" id="name" name="name" required><br><br>
             
